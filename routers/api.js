@@ -9,8 +9,14 @@ router.get("/", (req, res) => {
 });
 
 router.get("/random", (req, res) => {
-    const rand = Math.floor(Math.random(0, images.length));
-    res.status(200).send(new Buffer(""))
+    const rand = Math.floor(Math.random() * Math.floor(images.length));
+    request(images[rand], { method: "get", encoding: null }, function(err, response, body){
+        if(err) throw err;
+        const buffer = new Buffer.from(body, "base64");
+        
+        res.writeHead(200, { "Content-Type": "image/png", "Content-Length": buffer.length });
+        res.end(buffer);
+    });
 });
 
 module.exports = router;
