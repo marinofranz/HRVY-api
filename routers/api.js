@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/random", (req, res) => {
-    const rand = Math.floor(Math.random() * Math.floor(images.length));
+    const rand = Math.floor(Math.random() * images.length);
     request(images[rand], { method: "get", encoding: null }, function(err, response, body){
         if(err) throw err;
         const buffer = new Buffer.from(body, "base64");
